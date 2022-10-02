@@ -28,19 +28,17 @@ public class StudentController {
         this.transformer = transformer;
     }
 
-    @RequestMapping(
+    @GetMapping(
             path = "/{uuid}",
-            method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<StudentDto> get(@PathVariable UUID uuid) {
         return ResponseEntity.ok().body(transformer.toDto(studentService.get(uuid)));
     }
 
-    @RequestMapping(
-            path = "/",
-            method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_JSON_VALUE
+    @PostMapping(
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<StudentDto> create(@Valid @RequestBody StudentDto studentDto) {
         StudentDto responseStudentDto = transformer.toDto(studentService.create(transformer.toDomain(studentDto)));
@@ -49,9 +47,8 @@ public class StudentController {
                              .body(responseStudentDto);
     }
 
-    @RequestMapping(
+    @PatchMapping(
             path = "/{uuid}",
-            method = RequestMethod.PATCH,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<StudentDto> update(@PathVariable UUID uuid, @Valid @RequestBody StudentDto studentDto) {
@@ -59,9 +56,8 @@ public class StudentController {
                              .body(transformer.toDto(studentService.update(transformer.toDomain(studentDto).setUuid(uuid))));
     }
 
-    @RequestMapping(
+    @DeleteMapping(
             path = "/{uuid}",
-            method = RequestMethod.DELETE,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity delete(@PathVariable UUID uuid) {

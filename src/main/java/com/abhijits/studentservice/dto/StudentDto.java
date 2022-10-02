@@ -2,26 +2,32 @@ package com.abhijits.studentservice.dto;
 
 import com.abhijits.studentservice.domain.Gender;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.util.UUID;
 
 public class StudentDto {
 
     private UUID uuid;
 
-    @NotNull(message = "'firstName' should not be null.")
+    @NotBlank(message = "'firstName' should not be Empty or null.")
+    @Pattern(regexp = "^[A-Za-z]+$", message = "'firstName' should only contain alphabets.")
     private String firstName;
 
-    @NotNull(message = "'lastName' should not be null.")
+    @NotBlank(message = "'lastName' should not be Empty or null.")
+    @Pattern(regexp = "^[A-Za-z]+$", message = "'lastName' should only contain alphabets.")
     private String lastName;
 
-    @NotNull
+    @NotNull(message = "'age' should not be null.")
+    @Min(value = 4, message = "'age' minimum valid age is 4.")
+    @Max(value = 99, message = "'age' maximum valid age is 99.")
     private double age;
 
-    @NotNull(message = "'gender' should be one of MALE, FEMALE, OTHER")
+    @NotNull(message = "'gender' should not be null.")
     private Gender gender;
 
-    @NotNull
+    @NotNull(message = "'standard' should not be null.")
+    @Min(value = 1, message = "'standard' minimum valid age is 1.")
+    @Max(value = 12, message = "'standard' maximum valid age is 12.")
     private int standard;
 
     public UUID getUuid() {

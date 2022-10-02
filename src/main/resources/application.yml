@@ -10,4 +10,4 @@ spring:
     console:
       enabled: true
 stackTrace:
-  enabled: true
+  enabled: false

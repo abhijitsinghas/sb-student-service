@@ -1,9 +1,11 @@
 package com.abhijits.studentservice.errorhandling;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSourceResolvable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -12,6 +14,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.stream.Collectors;
 
 /**
  * Created by   : Abhijit Singh
@@ -43,10 +46,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     private ResponseEntity<Object> buildErrorResponse(Exception exception, HttpStatus httpStatus) {
-
         ErrorResponse errorResponse = ErrorResponse.createInstance()
-                .addMessage(exception.getMessage())
-                .setStatusCode(httpStatus.value());
+                                                   .setStatusCode(httpStatus.value());
+
+        if (exception instanceof MethodArgumentNotValidException) {
+            errorResponse.setMessage(((MethodArgumentNotValidException) exception).getBindingResult().getAllErrors().stream().map(
+                    MessageSourceResolvable::getDefaultMessage).collect(Collectors.toList()));
+        } else {
+            errorResponse.addMessage(exception.getMessage());
+        }
 
         if (printStackTrace) {
             errorResponse.setStackTrace(getStackTrace(exception));

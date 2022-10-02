@@ -2,7 +2,7 @@ package com.abhijits.studentservice.service;
 
 import com.abhijits.studentservice.dao.StudentRepository;
 import com.abhijits.studentservice.domain.Student;
-import com.abhijits.studentservice.exceptions.NotFoundException;
+import com.abhijits.studentservice.errorhandling.exceptions.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;

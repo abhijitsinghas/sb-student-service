@@ -1,4 +1,4 @@
-package com.abhijits.studentservice.exceptions;
+package com.abhijits.studentservice.errorhandling.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
