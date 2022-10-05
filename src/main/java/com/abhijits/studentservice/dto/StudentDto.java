@@ -26,8 +26,8 @@ public class StudentDto {
     private Gender gender;
 
     @NotNull(message = "'standard' should not be null.")
-    @Min(value = 1, message = "'standard' minimum valid age is 1.")
-    @Max(value = 12, message = "'standard' maximum valid age is 12.")
+    @Min(value = 1, message = "'standard' minimum valid value is 1.")
+    @Max(value = 12, message = "'standard' maximum valid value is 12.")
     private int standard;
 
     public UUID getUuid() {
